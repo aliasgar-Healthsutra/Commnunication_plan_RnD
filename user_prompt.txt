@@ -1,0 +1,176 @@
+#Extract date when report's result was published :
+start_date : From this report, extract the report release date (i.e., "Reported On", "Report Date", "Result Reported On", "Date of Issue", 
+or any other field indicating when the report was generated or finalized).
+
+If multiple dates are present, prioritize the date in the following order of importance:
+
+1-Reported On
+2-Report Date
+3-Result Reported On
+4-Date of Issue
+5-Sample Collection Date
+6-Test Performed Date
+
+If none of these fields are found in the report, then return today’s date as the reported date. Assume today is {TODAY_DATE}
+save the extracted date as starting date ie 'start_date'.
+
+#Schedule development :
+You are an expert at planning communication schedules. You have to use the {start_date} you just extracted and then schedule emails as :
+day 1: start_date (same day)
+day 3: start_date + 3days
+and so on goes : day 7,14,21,30
+month 2,3,4,6,9,12 : day 1. Find these dates with refrence to the start_date and keep it as first argument in communication plan csv instead of phrases like 'day 3', 'month 4 day 1' etc.
+
+# Expected result and format guidelines :
+Present ONLY the communication plan in an spreadsheet format with attributes : Day, Check-in Topic, Message for Patient. 
+Output meal plan ONLY as a pipe-delimited CSV format, without any extra markdown, asterisks or lines. First row should be header, subsequent rows should be data.
+
+When listing multiple points, use a., b., c. as sub-bullet points instead of asterisks or hyphens.
+
+Plan should be structured like :
+1st month - day : 1,3,7,14,21
+2nd month : 1st day
+months : 2,3,4,6,9, 12 : 1st day
+
+Include promotional emails for : International Heart Health Day on September 29th and align the promootional mail in the schedule accordingly.
+
+#Diet recommendation requirements:  
+create an email with specific diet recommendations for the patient.For every recommendation, point out why that recommendation will be helpful for the patient's health. 
+Create the diet recommendations based on the Indian palate. Append this content on the day-7 mail
+
+#Exercise recommendation requirements:
+You are an exercise physiologist who specialises in recommending physical exercises to patients based upon their lab report diagnosis. 
+Recommend a beginner-friendly exercise plan such that it the workout plan spans over a weak with 4 days of workout and 3 days of mild cardio.
+Recommend 4-5 easy to moderate level exercises for the related condition with simpler schedule of 1-2 sets and 10 reps each or lesser duration if time matters instead of reps.
+Provide links for tutorials of exercises or more content to read at the end. The links and data must come from trusted healthcare sources. append this content on email of day-14
+
+#Diet plan and exercise plan email schedules :
+Include the diet plan in email of day-7 : Dietary change plan
+Include the exercise routine in the exercise plan mail of day-14
+Provide links for nutrition guides and exercise guides from trusted sources in the respective mail.
+
+#Extraction of hospital details and lab details : 
+
+=> Hospital Contact Extraction Logic:
+First, scan the report for any explicit hospital phone number, hotline, or appointment number. Look for labels such as:
+
+"Hospital Phone",
+"Contact Number",
+"Appointment Phone",
+"Helpline",
+"Customer Care",
+"Support",
+"Reception",
+"Contact Us" section.
+
+If any such phone number is found, extract and save it as Hospital Phone Number.
+If no hospital contact number is found in the report, extract the Doctor’s Name who has signed, recommended, authorized, or is listed as responsible on the report. Look for fields like:
+"Reported by",
+"Reviewed by",
+"Referring Doctor"
+"Consultant Name",
+"Authorized by".
+
+Use this extracted doctor's name in patient communication instead of hospital phone.
+Format: "Please contact Dr. {Doctor_Name} for appointments or follow-up."
+
+=>  Lab Contact & Website Extraction Logic (for follow-up test emails):
+Search for any lab-specific booking or contact details in the report.
+
+Extract:
+Lab Contact Number
+Lab Booking URL or Website
+Look for fields such as:
+"Lab Contact",
+"Lab Helpline",
+"Customer Care",
+"Book Test",
+"Online Booking",
+
+URLs related to lab’s online booking or portal.
+If both are present, extract both.
+If not available, skip lab contact, but continue generating the follow-up message template (without inserting broken links or placeholders).
+
+=> General Rules for Extraction:
+- You may assume that phone numbers can be recognized as any standard phone number format (country codes, dashes, spaces, parentheses allowed).
+- Extract only the first valid contact number or link you find for both hospital and lab.
+- If both hospital contact and doctor name are present, always prioritize hospital phone number.
+- All extracted contact details must be included in the appropriate email templates wherever hospital or lab contacts are referenced.
+
+
+
+## Email schedules and their content :
+
+Date | Check-in Topic | Message to Patient
+
+Day 1| Test Results Notification |
+Your health report is ready! Key findings include elevated cholesterol, impaired glucose tolerance, and possible iron deficiency anemia. It’s time to take proactive steps. Check your detailed report & book a follow-up with Dr. Narkhede.
+[Link to report]
+
+Day 3| Follow-Up Appointment Reminder |
+Reminder: Schedule your doctor’s visit this week to discuss your test results. Early intervention can prevent complications. Click here to book:
+[Appointment Link]
+
+Day 7| Dietary Changes for {their condition} |
+Smart Eating Tip: Reduce fried foods, processed snacks & excess ghee/butter. Instead, try “oats, almonds, flaxseeds, & fresh veggies”. For better blood sugar control, “choose whole grains & fiber-rich foods” like brown rice & lentils. More tips:
+[Nutrition Guide Link]
+
+Day 14| Exercise for {related conditions} |
+“Get Moving! Walking 30 minutes daily can “lower cholesterol & improve glucose levels”. Strength training 2x/week helps, too. Small steps = Big gains! 🚀 Need a workout plan?
+[Exercise Guide Link]
+
+Day 21| Medication & Monitoring Reminder |
+Stay on Track! If prescribed medication for cholesterol or sugar control, take it regularly. Monitor BP, blood sugar & weight at home. 📉 Log changes & share them in your next doctor visit. 📋 Need help?
+[Monitoring Guide]
+
+Day 30| First Month Check-In & Reassess Progress |
+“How’s Your Health? It’s been a month since your tests! “Are you feeling more energetic?” Time to check “weight, BP & sugar levels”. If any concerns, book a follow-up here:
+[Appointment Link]
+
+Month 2| Monitoring Reminder for their condition |
+Time for a Sugar Check! Your “HbA1c & fasting blood sugar need a follow-up”. Keeping it in range reduces risks.
+Book your lab test today:
+[Lab Booking Link]
+
+
+Month 3| <affected organ health > Check-In |
+Heart Health Matters! Time for a “cholesterol recheck” to see if diet & exercise have helped. Keep going strong!
+Schedule your test here:
+[Test Booking Link]
+
+
+Month 4| Energy & <medical_condition> Monitoring |
+Feeling Tired? Your iron levels need tracking. Check hemoglobin levels & consult your doctor if fatigue persists. Book a test:
+[Lab Test Link]
+
+Month 6| Mid-Year Progress Check |
+Halfway There! Check your “weight, BP, cholesterol & glucose levels” today. Your health journey matters! Need help? “Doctor’s appointment”:
+[Booking Link]
+
+Month 9| Health Review Before Year-End |
+Time for a Review! Let’s ensure all your levels are in check. Schedule a “full blood test” & consult your doctor if needed.
+[Book Test]
+
+Month 12| Annual Health Check-Up | 
+One Year of Progress! Time for a “full health check-up”. Stay ahead with regular monitoring. Book your tests today:
+[Annual Check-Up Link]
+
+=> General rules for email message :
+- The greeting format should always be : Hello {patient_name}
+
+
+## Output format : 
+Date|Check-in Topic|Message for Patient
+2025-03-01|Health Summary & Doctor Consultation|Dear Mr. K Jandial, your recent lab report is ready. It indicates anemia with a high MCV, suggesting a need to investigate potential causes like vitamin deficiencies. Additionally, your eosinophil levels are elevated, which can sometimes be linked to allergies or other conditions. It's important to discuss these findings with your doctor for further evaluation and guidance. Please contact us to schedule your appointment. Hospital Contact: [Hospital Appointment Link] or call [Hospital Phone Number].
+2025-03-04|Follow-Up Appointment Reminder|Hello Mr. K Jandial, just a friendly reminder to schedule your doctor's visit this week to discuss your lab results. Understanding the cause of your anemia and elevated eosinophils is an important step towards maintaining your health. Click here to book: [Hospital Appointment Link].
+2025-03-08|Dietary Changes for Anemia & Immune Support|Dear Mr. K Jandial, a balanced diet can greatly support your overall health, especially for managing anemia and supporting your immune system. For your conditions, focusing on nutrient-rich and anti-inflammatory foods is beneficial. Here are some tips for an Indian palate: a. For Anemia (Macrocytic): Increase intake of Vitamin B12 and Folate. Include dairy products (milk, paneer, dahi), eggs (if non-vegetarian), lentils (dal), leafy greens (palak, methi), and fortified cereals. These help in red blood cell formation and maturation. b. For Eosinophilia/Immune Support: Focus on anti-inflammatory foods. Use spices like turmeric and ginger. Include fresh fruits and vegetables (berries, citrus, broccoli) for antioxidants. Incorporate healthy fats like flaxseeds and nuts. Consume fermented foods like dahi and chaas for gut health, which is crucial for immunity. c. General: Limit processed foods, sugary drinks, and excessive fried items. Stay well-hydrated. These choices help improve blood health and support your body's natural defenses. For more details, you can find general nutrition guidance here: [https://www.eatright.org/food/nutrition/healthy-eating].
+2025-03-15|Exercise for Well-being & Energy|Hello Mr. K Jandial, regular physical activity is key for overall well-being, energy levels, and can help manage stress, which indirectly supports your immune system. Aim for at least 30 minutes of moderate activity most days. Remember to start slowly and gradually increase intensity. Listen to your body and rest when needed. Here's a beginner-friendly weekly plan: a. Workout Days (4 days): Focus on gentle strength and flexibility. Try 1-2 sets of 10 repetitions for each: Chair Squats (sit and stand from a chair, helps leg strength), Wall Push-ups (push against a wall, strengthens upper body), Bicep Curls (with light weights or water bottles, strengthens arms), Leg Raises (lying on your back, lift one leg at a time, strengthens core and legs). b. Mild Cardio Days (3 days): Brisk walking for 30 minutes (improves cardiovascular health and energy), or gentle cycling. c. Rest Days: Allow your body to recover. These exercises are designed to be low-impact and build strength gradually, supporting overall health without overexertion. Find more general exercise guidelines here: [https://www.cdc.gov/physicalactivity/basics/adults/index.htm]. For exercise tutorials, search for 'chair squats for seniors' or 'wall push ups' on YouTube from trusted health channels like Mayo Clinic or NHS.
+2025-03-22|Home Monitoring & Symptom Awareness|Dear Mr. K Jandial, as you continue your health journey, pay attention to how you feel. Note any new or persistent symptoms like fatigue, shortness of breath (related to anemia), or allergic reactions (related to eosinophilia), and share them with your doctor. For general well-being, you can monitor your pulse and blood pressure at home if you have the equipment. Instructions for home BP monitoring: [https://www.heart.org/en/health-topics/high-blood-pressure/monitoring-your-blood-pressure]. Remember, consistent monitoring helps you and your doctor track your progress. If you have any concerns, please contact us: [Hospital Appointment Link] or [Hospital Phone Number].
+2025-03-31|First Month Check-In & Progress|Hello Mr. K Jandial, it's been a month since your lab report! How are you feeling? Have you noticed any changes in your energy levels or symptoms? We encourage you to continue with the healthy habits you've started. If you haven't yet, please ensure you've had your follow-up consultation with your doctor to discuss your anemia and eosinophil levels. Your health is our priority! Book your follow-up here: [Hospital Appointment Link].
+2025-04-01|Follow-up Tests for Anemia & Eosinophilia|Dear Mr. K Jandial, it's time to consider follow-up tests to monitor your conditions. Your doctor may recommend checking your Vitamin B12 and Folate levels to understand the cause of your macrocytic anemia. Additionally, a repeat CBC (Complete Blood Count) and possibly allergy tests or stool tests might be needed to investigate the elevated eosinophils. These tests are crucial for effective management. Learn more about macrocytic anemia: [https://www.mayoclinic.org/diseases-conditions/macrocytic-anemia/symptoms-causes/syc-20354929]. Book your lab tests today: [Lab Booking Link].
+2025-05-01|Diet & Lifestyle Reinforcement|Hello Mr. K Jandial, consistency is key! Continue incorporating the healthy dietary habits we discussed, focusing on nutrient-rich foods for anemia and anti-inflammatory options for immune support. Remember, small, consistent efforts lead to big health gains. Also, keep up with your regular physical activity and stress management techniques. Your commitment to these habits significantly contributes to your overall well-being. Need a reminder on diet tips? Refer to your Day 7 message or contact our nutrition department: [Hospital Nutrition Department Contact].
+2025-06-01|Symptom Check & Follow-up Reminder|Dear Mr. K Jandial, checking in on your health. Have you experienced any persistent symptoms such as unusual fatigue, shortness of breath, unexplained allergies, skin rashes, or digestive discomfort? If your doctor prescribed any specific treatments or further tests for your anemia or eosinophilia, please ensure you are following through. If symptoms persist or worsen, or if you have any new concerns, please don't hesitate to contact your doctor for another consultation. Book here: [Hospital Appointment Link].
+2025-08-01|Mid-Year Progress Check & General Wellness|Hello Mr. K Jandial, we're halfway through the year! This is a great time to reflect on your health journey. Are you consistently practicing your healthy habits? Remember, general well-being advice like adequate rest, stress avoidance, and maintaining a moderate activity level (e.g., walking slowly, not briskly, if feeling fatigued due to anemia) are vital. If you haven't had a recent check-up since your initial consultation, consider scheduling one to review your overall health. Your well-being matters! Contact us: [Hospital Appointment Link] or [Hospital Phone Number].
+2025-09-29|International Heart Health Day Promotion|Hello Mr. K Jandial, Happy World Heart Day! At [Hospital Name], we believe a healthy heart is key to a healthy life. While your recent report focused on blood parameters, maintaining good cardiovascular health is important for everyone, especially as we age. We're offering special heart health check-up packages this month. Take a step towards a stronger heart! Learn more and book: [Hospital Heart Check-up Promotion Link].
+2025-11-01|Health Review Before Year-End|Dear Mr. K Jandial, as the year winds down, it's a good time to review your health. Have you been able to manage any symptoms effectively? Are you feeling energetic and well? We encourage you to continue your healthy lifestyle choices. Consider scheduling a general health review with your doctor to ensure everything is on track before the year ends. This might include a re-evaluation of your blood counts and eosinophil levels if deemed necessary by your doctor. Learn more about eosinophilia: [https://www.mayoclinic.org/diseases-conditions/eosinophilia/symptoms-causes/syc-20354838]. Book your appointment: [Hospital Appointment Link].
+2026-03-01|Annual Health Check-Up|Dear Mr. K Jandial, congratulations on completing a year of proactive health management! It's time for your annual health check-up. This is a comprehensive review of your health, including any follow-up on your anemia and eosinophil levels, and overall well-being. Regular check-ups help you stay ahead and maintain optimal health. We look forward to supporting you in the coming year! Book your annual check-up today: [Hospital Annual Check-up Link]. For prescription refills, contact our pharmacy: [Hospital Pharmacy Contact].

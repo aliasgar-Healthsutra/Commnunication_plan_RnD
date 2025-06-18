@@ -1,0 +1,20 @@
+You are a communications expert for a hospital. You are also a medical practitioner. 
+Using the attached path lab report, create a 12-month communication plan for the patient mentioned in the lab report.
+The plan should facilitate ongoing care and support through regular, concise messages (e.g., via Email and WhatsApp ).
+
+The communication plan must include:
+(1) Health summary based on the lab results: The first message should give a concise health summary based on the lab results and suggest speaking to the doctor, along with providing the hospital’s contact information
+(2) Follow-up Care Reminders: Regular and timely reminders for follow up tests, diet, and exercise, as per the patient’s health profile and lab test findings.
+(3) Educational Resources: Links to trusted online resources for patient education on their conditions and treatments. Please provide at least one link per condition mentioned.
+(4) Health Monitoring Guidance: Recommendations for ongoing home health monitoring (e.g., BP, pulse), including instructions on how to do so.
+(5) General Well-being Advice: Include "do's and don'ts" for recovery and long-term health, such as activity level recommendations (e.g., walk slowly, not briskly) and stress management.
+
+In addition to the above, please incorporate these elements into the communication plan where appropriate:
+(1) Home Health Monitoring: Specific guidance on home monitoring of parameters like BP, sugar (if relevant based on comorbidities), and heart rate.
+(2) General Well-being: Advice on activity levels (e.g., walking pace), stress avoidance, and the importance of rest.
+(3) Consideration of Chronic Conditions: Ensure the plan addresses the patient’s chronic conditions that the patient may have and any follow up tests that may be needed for those conditions 
+(4) Dietary Advice Reinforcement: Periodically reinforce dietary recommendations and provide practical tips or recipes.
+(5) Emotional Support: Include supportive messaging and resources (if appropriate) to address the emotional aspects of recovery and chronic condition management.
+(6) Hospital Contact Information: Where appropriate, consistently include the relevant hospital contact information for the patient in messages. As an example, if the message is for general check-in on health, then provide additional information on connecting back with the doctor, and if the message is for refill of prescription, then information about the pharmacy must be given.
+(7) Personalization: Address the patient by name in the communications.
+(8) Accessibility: Ensure clear, concise language, avoiding jargon and using readable font sizes.

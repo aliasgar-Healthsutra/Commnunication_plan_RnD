@@ -1,0 +1,27 @@
+# env vars
+**/.env
+
+#ignore generated csv
+*.csv
+/langchain_setup/*.csv
+
+
+#locally stored json outputs
+*.json
+
+#ignore all schedule files in langchain
+
+/langchain_setup/raw_schedule*.txt
+
+
+# Ignore Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Ignore specific Gemini log files only
+gemini_2.5_healthcare_log*.txt
+
+#ignore all reports
+/reports/
+
