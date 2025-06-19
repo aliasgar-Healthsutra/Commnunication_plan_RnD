@@ -1,0 +1,39 @@
+{
+  "_id": "ObjectId",
+  "reportId": "string",               // Unique ID per uploaded report
+  "user_id": "string",                // Reference to user (not in patientDetails anymore),
+  "patient_name": "string", //temporary field 
+  "reportType": "pathology" | "radiology",
+
+  "metadata": {
+    "collectionDate": "ISO 8601",
+    "reportDateTime": "ISO 8601",
+    "receivingDateTime": "ISO 8601",
+    "reportStatus": "string"
+  },
+
+  "tests": [
+    {
+      "testCategory": "string",
+      "sampleType": "string | null",
+      "testType": "pathlab" | "radiology",
+      "testDetails": [
+        // For pathology
+        {
+          "testName": "string",
+          "result": {
+            "value": "string | number",
+            "unit": "string",
+            "flag": "H" | "L" | null
+          },
+          "outOfRange": true | false
+        },
+        // For radiology
+        {
+          "organName": "string",
+          "outOfRange": true | false
+        }
+      ]
+    }
+  ]
+}
